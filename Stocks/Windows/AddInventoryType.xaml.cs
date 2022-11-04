@@ -37,7 +37,7 @@ namespace Stocks.Windows
         {
             if (!string.IsNullOrWhiteSpace(Name.Text))
             {
-                var deletedObj = _enterpriseStocksEntities.InventoryTypeJournals.ToList().Find(w => w.Id.ToString() == Id.Content.ToString());
+                var deletedObj = _enterpriseStocksEntities.InventoryTypeJournals.ToList().Find(w => w.Id.ToString() == (Id?.Content != null ? Id?.Content.ToString() : ""));
                 if (deletedObj != null)
                 {
                     var up = _enterpriseStocksEntities.InventoryTypeJournals.SingleOrDefault(x => x.Id == deletedObj.Id);
