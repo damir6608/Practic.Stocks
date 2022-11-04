@@ -1,0 +1,543 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EnterpriseStocksModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="InventoryControlCart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StockInventoryTypeId" Type="int" Nullable="false" />
+          <Property Name="InvoiceId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InventoryTypeJournal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="StaffId" Type="int" Nullable="false" />
+          <Property Name="InvoiceTypeJournalId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InvoiceInventoryType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InvoiceId" Type="int" Nullable="false" />
+          <Property Name="InventoryTypeJournalId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InvoiceTypeJournal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StaffJournal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Position" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Number" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StockInventoryType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StockId" Type="int" Nullable="false" />
+          <Property Name="InventoryTypeJournalId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Inventory__Invoi__4222D4EF">
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="1" />
+          <End Role="InventoryControlCart" Type="Self.InventoryControlCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InventoryControlCart">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__Stock__412EB0B6">
+          <End Role="StockInventoryType" Type="Self.StockInventoryType" Multiplicity="1" />
+          <End Role="InventoryControlCart" Type="Self.InventoryControlCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockInventoryType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InventoryControlCart">
+              <PropertyRef Name="StockInventoryTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Invoice__Invoice__36B12243">
+          <End Role="InvoiceTypeJournal" Type="Self.InvoiceTypeJournal" Multiplicity="1" />
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InvoiceTypeJournal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="InvoiceTypeJournalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Invoice__StaffId__35BCFE0A">
+          <End Role="StaffJournal" Type="Self.StaffJournal" Multiplicity="1" />
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffJournal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="StaffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InvoiceIn__Inven__3A81B327">
+          <End Role="InventoryTypeJournal" Type="Self.InventoryTypeJournal" Multiplicity="1" />
+          <End Role="InvoiceInventoryType" Type="Self.InvoiceInventoryType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryTypeJournal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InvoiceInventoryType">
+              <PropertyRef Name="InventoryTypeJournalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InvoiceIn__Invoi__398D8EEE">
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="1" />
+          <End Role="InvoiceInventoryType" Type="Self.InvoiceInventoryType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InvoiceInventoryType">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StockInve__Inven__3E52440B">
+          <End Role="InventoryTypeJournal" Type="Self.InventoryTypeJournal" Multiplicity="1" />
+          <End Role="StockInventoryType" Type="Self.StockInventoryType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryTypeJournal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StockInventoryType">
+              <PropertyRef Name="InventoryTypeJournalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StockInve__Stock__3D5E1FD2">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
+          <End Role="StockInventoryType" Type="Self.StockInventoryType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StockInventoryType">
+              <PropertyRef Name="StockId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EnterpriseStocksModelStoreContainer">
+          <EntitySet Name="InventoryControlCart" EntityType="Self.InventoryControlCart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InventoryTypeJournal" EntityType="Self.InventoryTypeJournal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InvoiceInventoryType" EntityType="Self.InvoiceInventoryType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InvoiceTypeJournal" EntityType="Self.InvoiceTypeJournal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StaffJournal" EntityType="Self.StaffJournal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockInventoryType" EntityType="Self.StockInventoryType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Inventory__Invoi__4222D4EF" Association="Self.FK__Inventory__Invoi__4222D4EF">
+            <End Role="Invoice" EntitySet="Invoice" />
+            <End Role="InventoryControlCart" EntitySet="InventoryControlCart" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__Stock__412EB0B6" Association="Self.FK__Inventory__Stock__412EB0B6">
+            <End Role="StockInventoryType" EntitySet="StockInventoryType" />
+            <End Role="InventoryControlCart" EntitySet="InventoryControlCart" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Invoice__Invoice__36B12243" Association="Self.FK__Invoice__Invoice__36B12243">
+            <End Role="InvoiceTypeJournal" EntitySet="InvoiceTypeJournal" />
+            <End Role="Invoice" EntitySet="Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Invoice__StaffId__35BCFE0A" Association="Self.FK__Invoice__StaffId__35BCFE0A">
+            <End Role="StaffJournal" EntitySet="StaffJournal" />
+            <End Role="Invoice" EntitySet="Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InvoiceIn__Inven__3A81B327" Association="Self.FK__InvoiceIn__Inven__3A81B327">
+            <End Role="InventoryTypeJournal" EntitySet="InventoryTypeJournal" />
+            <End Role="InvoiceInventoryType" EntitySet="InvoiceInventoryType" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InvoiceIn__Invoi__398D8EEE" Association="Self.FK__InvoiceIn__Invoi__398D8EEE">
+            <End Role="Invoice" EntitySet="Invoice" />
+            <End Role="InvoiceInventoryType" EntitySet="InvoiceInventoryType" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockInve__Inven__3E52440B" Association="Self.FK__StockInve__Inven__3E52440B">
+            <End Role="InventoryTypeJournal" EntitySet="InventoryTypeJournal" />
+            <End Role="StockInventoryType" EntitySet="StockInventoryType" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockInve__Stock__3D5E1FD2" Association="Self.FK__StockInve__Stock__3D5E1FD2">
+            <End Role="Stock" EntitySet="Stock" />
+            <End Role="StockInventoryType" EntitySet="StockInventoryType" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EnterpriseStocksModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="InventoryControlCart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StockInventoryTypeId" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Invoice" Relationship="Self.FK__Inventory__Invoi__4222D4EF" FromRole="InventoryControlCart" ToRole="Invoice" />
+          <NavigationProperty Name="StockInventoryType" Relationship="Self.FK__Inventory__Stock__412EB0B6" FromRole="InventoryControlCart" ToRole="StockInventoryType" />
+        </EntityType>
+        <EntityType Name="InventoryTypeJournal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="InvoiceInventoryTypes" Relationship="Self.FK__InvoiceIn__Inven__3A81B327" FromRole="InventoryTypeJournal" ToRole="InvoiceInventoryType" />
+          <NavigationProperty Name="StockInventoryTypes" Relationship="Self.FK__StockInve__Inven__3E52440B" FromRole="InventoryTypeJournal" ToRole="StockInventoryType" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StaffId" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceTypeJournalId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="InventoryControlCarts" Relationship="Self.FK__Inventory__Invoi__4222D4EF" FromRole="Invoice" ToRole="InventoryControlCart" />
+          <NavigationProperty Name="InvoiceTypeJournal" Relationship="Self.FK__Invoice__Invoice__36B12243" FromRole="Invoice" ToRole="InvoiceTypeJournal" />
+          <NavigationProperty Name="StaffJournal" Relationship="Self.FK__Invoice__StaffId__35BCFE0A" FromRole="Invoice" ToRole="StaffJournal" />
+          <NavigationProperty Name="InvoiceInventoryTypes" Relationship="Self.FK__InvoiceIn__Invoi__398D8EEE" FromRole="Invoice" ToRole="InvoiceInventoryType" />
+        </EntityType>
+        <EntityType Name="InvoiceInventoryType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InvoiceId" Type="Int32" Nullable="false" />
+          <Property Name="InventoryTypeJournalId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="InventoryTypeJournal" Relationship="Self.FK__InvoiceIn__Inven__3A81B327" FromRole="InvoiceInventoryType" ToRole="InventoryTypeJournal" />
+          <NavigationProperty Name="Invoice" Relationship="Self.FK__InvoiceIn__Invoi__398D8EEE" FromRole="InvoiceInventoryType" ToRole="Invoice" />
+        </EntityType>
+        <EntityType Name="InvoiceTypeJournal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Invoices" Relationship="Self.FK__Invoice__Invoice__36B12243" FromRole="InvoiceTypeJournal" ToRole="Invoice" />
+        </EntityType>
+        <EntityType Name="StaffJournal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Invoices" Relationship="Self.FK__Invoice__StaffId__35BCFE0A" FromRole="StaffJournal" ToRole="Invoice" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Number" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="StockInventoryTypes" Relationship="Self.FK__StockInve__Stock__3D5E1FD2" FromRole="Stock" ToRole="StockInventoryType" />
+        </EntityType>
+        <EntityType Name="StockInventoryType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StockId" Type="Int32" Nullable="false" />
+          <Property Name="InventoryTypeJournalId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="InventoryControlCarts" Relationship="Self.FK__Inventory__Stock__412EB0B6" FromRole="StockInventoryType" ToRole="InventoryControlCart" />
+          <NavigationProperty Name="InventoryTypeJournal" Relationship="Self.FK__StockInve__Inven__3E52440B" FromRole="StockInventoryType" ToRole="InventoryTypeJournal" />
+          <NavigationProperty Name="Stock" Relationship="Self.FK__StockInve__Stock__3D5E1FD2" FromRole="StockInventoryType" ToRole="Stock" />
+        </EntityType>
+        <Association Name="FK__Inventory__Invoi__4222D4EF">
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="1" />
+          <End Role="InventoryControlCart" Type="Self.InventoryControlCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InventoryControlCart">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inventory__Stock__412EB0B6">
+          <End Role="StockInventoryType" Type="Self.StockInventoryType" Multiplicity="1" />
+          <End Role="InventoryControlCart" Type="Self.InventoryControlCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockInventoryType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InventoryControlCart">
+              <PropertyRef Name="StockInventoryTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InvoiceIn__Inven__3A81B327">
+          <End Role="InventoryTypeJournal" Type="Self.InventoryTypeJournal" Multiplicity="1" />
+          <End Role="InvoiceInventoryType" Type="Self.InvoiceInventoryType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryTypeJournal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InvoiceInventoryType">
+              <PropertyRef Name="InventoryTypeJournalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StockInve__Inven__3E52440B">
+          <End Role="InventoryTypeJournal" Type="Self.InventoryTypeJournal" Multiplicity="1" />
+          <End Role="StockInventoryType" Type="Self.StockInventoryType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryTypeJournal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StockInventoryType">
+              <PropertyRef Name="InventoryTypeJournalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Invoice__Invoice__36B12243">
+          <End Role="InvoiceTypeJournal" Type="Self.InvoiceTypeJournal" Multiplicity="1" />
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InvoiceTypeJournal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="InvoiceTypeJournalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Invoice__StaffId__35BCFE0A">
+          <End Role="StaffJournal" Type="Self.StaffJournal" Multiplicity="1" />
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffJournal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="StaffId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__InvoiceIn__Invoi__398D8EEE">
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="1" />
+          <End Role="InvoiceInventoryType" Type="Self.InvoiceInventoryType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InvoiceInventoryType">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StockInve__Stock__3D5E1FD2">
+          <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
+          <End Role="StockInventoryType" Type="Self.StockInventoryType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stock">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StockInventoryType">
+              <PropertyRef Name="StockId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EnterpriseStocksEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="InventoryControlCarts" EntityType="Self.InventoryControlCart" />
+          <EntitySet Name="InventoryTypeJournals" EntityType="Self.InventoryTypeJournal" />
+          <EntitySet Name="Invoices" EntityType="Self.Invoice" />
+          <EntitySet Name="InvoiceInventoryTypes" EntityType="Self.InvoiceInventoryType" />
+          <EntitySet Name="InvoiceTypeJournals" EntityType="Self.InvoiceTypeJournal" />
+          <EntitySet Name="StaffJournals" EntityType="Self.StaffJournal" />
+          <EntitySet Name="Stocks" EntityType="Self.Stock" />
+          <EntitySet Name="StockInventoryTypes" EntityType="Self.StockInventoryType" />
+          <AssociationSet Name="FK__Inventory__Invoi__4222D4EF" Association="Self.FK__Inventory__Invoi__4222D4EF">
+            <End Role="Invoice" EntitySet="Invoices" />
+            <End Role="InventoryControlCart" EntitySet="InventoryControlCarts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inventory__Stock__412EB0B6" Association="Self.FK__Inventory__Stock__412EB0B6">
+            <End Role="StockInventoryType" EntitySet="StockInventoryTypes" />
+            <End Role="InventoryControlCart" EntitySet="InventoryControlCarts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InvoiceIn__Inven__3A81B327" Association="Self.FK__InvoiceIn__Inven__3A81B327">
+            <End Role="InventoryTypeJournal" EntitySet="InventoryTypeJournals" />
+            <End Role="InvoiceInventoryType" EntitySet="InvoiceInventoryTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockInve__Inven__3E52440B" Association="Self.FK__StockInve__Inven__3E52440B">
+            <End Role="InventoryTypeJournal" EntitySet="InventoryTypeJournals" />
+            <End Role="StockInventoryType" EntitySet="StockInventoryTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Invoice__Invoice__36B12243" Association="Self.FK__Invoice__Invoice__36B12243">
+            <End Role="InvoiceTypeJournal" EntitySet="InvoiceTypeJournals" />
+            <End Role="Invoice" EntitySet="Invoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Invoice__StaffId__35BCFE0A" Association="Self.FK__Invoice__StaffId__35BCFE0A">
+            <End Role="StaffJournal" EntitySet="StaffJournals" />
+            <End Role="Invoice" EntitySet="Invoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__InvoiceIn__Invoi__398D8EEE" Association="Self.FK__InvoiceIn__Invoi__398D8EEE">
+            <End Role="Invoice" EntitySet="Invoices" />
+            <End Role="InvoiceInventoryType" EntitySet="InvoiceInventoryTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockInve__Stock__3D5E1FD2" Association="Self.FK__StockInve__Stock__3D5E1FD2">
+            <End Role="Stock" EntitySet="Stocks" />
+            <End Role="StockInventoryType" EntitySet="StockInventoryTypes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EnterpriseStocksModelStoreContainer" CdmEntityContainer="EnterpriseStocksEntities">
+          <EntitySetMapping Name="InventoryControlCarts">
+            <EntityTypeMapping TypeName="EnterpriseStocksModel.InventoryControlCart">
+              <MappingFragment StoreEntitySet="InventoryControlCart">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StockInventoryTypeId" ColumnName="StockInventoryTypeId" />
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InventoryTypeJournals">
+            <EntityTypeMapping TypeName="EnterpriseStocksModel.InventoryTypeJournal">
+              <MappingFragment StoreEntitySet="InventoryTypeJournal">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invoices">
+            <EntityTypeMapping TypeName="EnterpriseStocksModel.Invoice">
+              <MappingFragment StoreEntitySet="Invoice">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
+                <ScalarProperty Name="InvoiceTypeJournalId" ColumnName="InvoiceTypeJournalId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InvoiceInventoryTypes">
+            <EntityTypeMapping TypeName="EnterpriseStocksModel.InvoiceInventoryType">
+              <MappingFragment StoreEntitySet="InvoiceInventoryType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+                <ScalarProperty Name="InventoryTypeJournalId" ColumnName="InventoryTypeJournalId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InvoiceTypeJournals">
+            <EntityTypeMapping TypeName="EnterpriseStocksModel.InvoiceTypeJournal">
+              <MappingFragment StoreEntitySet="InvoiceTypeJournal">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StaffJournals">
+            <EntityTypeMapping TypeName="EnterpriseStocksModel.StaffJournal">
+              <MappingFragment StoreEntitySet="StaffJournal">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stocks">
+            <EntityTypeMapping TypeName="EnterpriseStocksModel.Stock">
+              <MappingFragment StoreEntitySet="Stock">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockInventoryTypes">
+            <EntityTypeMapping TypeName="EnterpriseStocksModel.StockInventoryType">
+              <MappingFragment StoreEntitySet="StockInventoryType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StockId" ColumnName="StockId" />
+                <ScalarProperty Name="InventoryTypeJournalId" ColumnName="InventoryTypeJournalId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

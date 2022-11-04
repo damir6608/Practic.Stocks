@@ -1,0 +1,17 @@
+﻿<Window x:Class="Stocks.Windows.InventoryTypeJournal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Stocks.Windows"
+        mc:Ignorable="d"
+        Title="InventoryTypeJournal" Height="450" Width="800">
+    <Grid>
+        <ListBox x:Name="InventoryTypes" SelectionChanged="InventoryTypes_Selected">
+
+        </ListBox>
+        <Button Margin="364,169,328,225" Name="Add" Click="Add_Click" >Добавить</Button>
+        <Button Margin="364,242,328,152" Name="Refresh" Click="Refresh_Click" >Обновить список</Button>
+        <Button x:Name="ExportPDF" Click="ExportPDF_Click" Margin="335,322,328,67">PDF</Button>
+    </Grid>
+</Window>

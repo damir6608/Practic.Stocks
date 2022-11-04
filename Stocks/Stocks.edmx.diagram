@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b4d2f116c74a42e7bcedfbf245f7d005" Name="Diagram1">
+        <EntityTypeShape EntityType="EnterpriseStocksModel.InventoryControlCart" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EnterpriseStocksModel.InventoryTypeJournal" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EnterpriseStocksModel.Invoice" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EnterpriseStocksModel.InvoiceInventoryType" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EnterpriseStocksModel.InvoiceTypeJournal" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="EnterpriseStocksModel.StaffJournal" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EnterpriseStocksModel.Stock" Width="1.5" PointX="0.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EnterpriseStocksModel.StockInventoryType" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <AssociationConnector Association="EnterpriseStocksModel.FK__Inventory__Invoi__4222D4EF" ManuallyRouted="false" />
+        <AssociationConnector Association="EnterpriseStocksModel.FK__Inventory__Stock__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="EnterpriseStocksModel.FK__InvoiceIn__Inven__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="EnterpriseStocksModel.FK__StockInve__Inven__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="EnterpriseStocksModel.FK__Invoice__Invoice__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="EnterpriseStocksModel.FK__Invoice__StaffId__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="EnterpriseStocksModel.FK__InvoiceIn__Invoi__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="EnterpriseStocksModel.FK__StockInve__Stock__3D5E1FD2" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
